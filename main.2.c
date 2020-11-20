@@ -17,6 +17,7 @@ int othello() {  //배치상태출력
 	
 	    printf("\n");
 	    
+	    
 }
 }
 
