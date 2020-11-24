@@ -1,19 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define N 6
-int gameboard[N][N];
+#define BOARD_SIZE 6
+#define POINTS_SIZE 8
+
+int** gameboard;
+
+
+
 void init_othello() { //게임초기화
     int i, j;
+    gameboard = (int**)malloc(sizeof(int*) * BOARD_SIZE);
     
-	for(i=0;i<N;i++) {
-		for(j=0;j<N;j++) {
-		gameboard[i][j]=0;
+	for (i=0;i<BOARD_SIZE;i++) {
+		gameboard[i] = (int*)malloc(sizeof(int) * BOARD_SIZE);
 	}
-	 }   
-    gameboard[3][3] = 'B';
-    gameboard[3][4] = 'W';
-    gameboard[4][3] = 'W';
-    gameboard[4][4] = 'B';
+	for (i=0;i<BOARD_SIZE;i++) {
+		for (j=0;j<BOARD_SIZE;j++) {
+			gameboard[i][j] = 0;
+		}
+		
+	}
+  
+    gameboard[(BOARD_SIZE / 2) -1][BOARD_SIZE / 2] = 1;
+    gameboard[(BOARD_SIZE / 2) -1][(BOARD_SIZE / 2) -1] = 2;
+    gameboard[BOARD_SIZE / 2][(BOARD_SIZE / 2) -1]  = 1;
+    gameboard[BOARD_SIZE / 2][BOARD_SIZE / 2] = 2;
 }
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
