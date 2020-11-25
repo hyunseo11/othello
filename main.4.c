@@ -63,7 +63,18 @@ int checkInputPoint(int x, int y, int turn) {
 }
 
 int checkClosePiece(int x, int y, int turn) {
-	
+	//근처에 상대방의 돌이 있을 때
+	int i, j;
+	for (i=-1;i<2;i++) {
+		for (j=-1;j<2;j++) {
+			if (x+i>BOARD_SIZE || y+j>BOARD_SIZE || x+i <=0 || y+j <=0)
+			   continue;
+		    if (turn == 1){
+		    	
+			}
+		    
+		}
+	} 
 }
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
