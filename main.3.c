@@ -11,8 +11,7 @@
 #define POINT_LEFTDOWN_CROSS 5
 #define POINT_RIGHTUP_CROSS 6
 #define POINT_RIGHTDOWN_CROSS 7
-#define FALSE (0)
-#define TRUE (1)
+
 
 //빈공간 0, 흑색 1, 백색 2; 
 int**gameboard;
@@ -160,8 +159,9 @@ int checkPoint(int x, int y, int turn) {
 }
 
 int checkPointStart(int x, int y, int turn) {
+	char false;
 	if (x<0 || y<0 || x>BOARD_SIZE || y>BOARD_SIZE)
-	return 0;
+	return false;
 	int checkClose = checkClosePiece(x, y, turn);
 	int checkCross = checkCrossLinePiece(x, y, turn);
 	
@@ -169,28 +169,25 @@ int checkPointStart(int x, int y, int turn) {
 }
 
 void initGameEndCheckFlag() {
-	checkedTurn_player1 = 0;
-	checkedTurn_player2 = 0;
+	char false;
+	checkedTurn_player1 = false;
+	checkedTurn_player2 = false;
 }
 
 int isGameEnd() {
-    int endCheck = 0;
+	char false;
+	char true;
+    int endCheck = false;
     
-	// 연속으로 둘곳이 없을때  
-	int checkedturned_player1 = 0;
-    int checkedturned_player2 = 0;
-    
-	
-	
 	// 양쪽 플레이어 모두 뒤집기가 가능한 칸이 없는 경우
-	if (checkedturned_player1 && checkedturned_player2) {
-		endCheck = 1;
+	if (checkedTurn_player1 && checkedTurn_player2) {
+		endCheck = true;
 		return endCheck;
 	} 
 	// 판의 자리가 없을 때
 	int remainBoard = BOARD_SIZE * BOARD_SIZE - totalPieceOnBoard;
 	if (remainBoard == 0) {
-		endCheck = 1;
+		endCheck = true;
 		return endCheck;
 	} 
 	
@@ -198,15 +195,20 @@ int isGameEnd() {
 }
 
 int checkInputPoint(int x, int y, int turn) {
-	int pointExist = 1;
+	char true;
+	char false;
 	
-	if(gameboard[x][y] != 0)
+	int pointExist = true;
+	
+	if(gameboard[x][y] != false)
 	   pointExist = 0;
 	   
 	return pointExist;
 }
 
 int checkClosePiece(int x, int y, int turn) {
+	char false;
+	char true;
 	//근처에 상대방의 돌이 있을 때
 	int i, j;
 	for (i=-1;i<2;i++) {
@@ -215,17 +217,17 @@ int checkClosePiece(int x, int y, int turn) {
 			   continue;
 		    if (turn == 1){
 		    	if (gameboard[x+i][y+j] == 2 && gameboard[x+i][y+j] != 0) {
-		    		return 1;
+		    		return true;
 				}
 			}
 		    else {
 		    	if (gameboard[x+i][y+j] == 1 && gameboard[x+i][y+i] != 0) {
-		    		return 1;
+		    		return true;
 				}
 			}
 		}
 	}
-	return 0; 
+	return false; 
 }
 
 int checkCrossLinePiece(int x, int y, int turn)  {
@@ -234,7 +236,10 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 	//8방향은 위, 아래, 좌, 우, 좌상단, 좌하단, 우상단, 우하단이다.
 	initPoints();  //8방향 초기화
 	
-	int returnTurn = 0;
+	char false;
+	char true;
+	
+	int returnTurn = false;
 	int i;
 	
 	for(i=1;y-i>=0;i++) {// 위 
@@ -247,7 +252,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 	   		break;
 		   }
 		   else if (gameboard[x][y-i] == turn) {
-			returnTurn = 1;
+			returnTurn = true;
 			points_X[0] = x;
 			points_Y[0] = y-i;
 			break;
@@ -265,7 +270,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 	   		break;
 		   }
 		   else if (gameboard[x][y-i] == turn) {
-			returnTurn = 1;
+			returnTurn = true;
 			points_X[1] = x;
 			points_Y[1] = y+i;
 			break;
@@ -283,7 +288,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 	   		break;
 		   }
 		   else if (gameboard[x-i][y] == turn) {
-			returnTurn = 1;
+			returnTurn = true;
 			points_X[2] = x-i;
 			points_Y[2] = y;
 			break;
@@ -301,7 +306,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 	   		break;
 		   }
 		   else if (gameboard[x+i][y] == turn) {
-			returnTurn = 1;
+			returnTurn = true;
 			points_X[3] = x+i;
 			points_Y[3] = y;
 			break;
@@ -319,7 +324,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			if (gameboard[x-i][y-i] == 0) 
 			    break;
 		    else if (gameboard[x-i][y-i] == turn) {
-		    	returnTurn = 1;
+		    	returnTurn = true;
 		    	points_X[4] = x-i;
 		    	points_Y[4] = y-i;
 		    	break;
@@ -337,7 +342,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			if (gameboard[x-i][y+i] == 0) 
 			    break;
 		    else if (gameboard[x-i][y+i] == turn) {
-		    	returnTurn = 1;
+		    	returnTurn = true;
 		    	points_X[5] = x-i;
 		    	points_Y[5] = y+i;
 		    	break;
@@ -355,7 +360,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			if (gameboard[x+i][y-i] == 0) 
 			    break;
 		    else if (gameboard[x+i][y-i] == turn) {
-		    	returnTurn = 1;
+		    	returnTurn = true;
 		    	points_X[6] = x+i;
 		    	points_Y[6] = y-i;
 		    	break;
@@ -373,7 +378,7 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			if (gameboard[x+i][y+i] == 0) 
 			    break;
 		    else if (gameboard[x+i][y+i] == turn) {
-		    	returnTurn = 1;
+		    	returnTurn = true;
 		    	points_X[7] = x+i;
 		    	points_Y[7] = y+i;
 		    	break;
@@ -389,6 +394,20 @@ void initPoints() {
 		points_X[i] = -1;
 		points_Y[i] = -1;
 	}
+}
+
+void printGetPieces(int x, int y, int turn) {
+	//뒤집은 돌의 갯수 카운트 출력 
+	int getPieces = 0;
+	//각 좌표들을 기준으로 뒤집음 
+	int i;
+	for (i = 0;i<POINTS_SIZE;i++) {
+		if (points_X[i] == -1)
+		    continue;
+		int index = 1;
+		
+		
+	} 
 }
 
 
