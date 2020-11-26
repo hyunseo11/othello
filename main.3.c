@@ -47,14 +47,15 @@ void main() {
 	printf("Play othello\n\n");
 	initOthello();
 	
+	int x, y;
+	
 	while (!isGameEnd()) {// 게임이 끝나는 상황인지 체크  
-		int x, y;
-		printOthello();
 		
+		printOthello();
 		
 		if(checkPlaceOnBoard(turn)) {
 			//둘 곳이 있다면  
-			scanf("%d %d", &x, &y);  //좌표 입력받기
+			
 			 if ((x<0 || x>BOARD_SIZE) || (y<0 || y>BOARD_SIZE)) {//판이 아닌 곳에 둘 경우  
 			 	printf("돌을 놓을 곳이 없습니다. 다시 선택해주세요\n\n");
 			 	continue;
@@ -289,8 +290,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 		   }
 		   else if (gameboard[x][y-i] == turn) {
 			returnTurn = 1;
-			points_X[0] = x;
-			points_Y[0] = y-i;
+			points_X[POINT_UP] = x;
+			points_Y[POINT_UP] = y-i;
 			break;
 		   }
 	   }
@@ -307,8 +308,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 		   }
 		   else if (gameboard[x][y-i] == turn) {
 			returnTurn = 1;
-			points_X[1] = x;
-			points_Y[1] = y+i;
+			points_X[POINT_DOWN] = x;
+			points_Y[POINT_DOWN] = y+i;
 			break;
 		   }
 	   }
@@ -325,8 +326,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 		   }
 		   else if (gameboard[x-i][y] == turn) {
 			returnTurn = 1;
-			points_X[2] = x-i;
-			points_Y[2] = y;
+			points_X[POINT_LEFT] = x-i;
+			points_Y[POINT_LEFT] = y;
 			break;
 		   }
 	   }
@@ -343,8 +344,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 		   }
 		   else if (gameboard[x+i][y] == turn) {
 			returnTurn = 1;
-			points_X[3] = x+i;
-			points_Y[3] = y;
+			points_X[POINT_RIGHT] = x+i;
+			points_Y[POINT_RIGHT] = y;
 			break;
 		   }
 	   }
@@ -361,8 +362,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			    break;
 		    else if (gameboard[x-i][y-i] == turn) {
 		    	returnTurn = 1;
-		    	points_X[4] = x-i;
-		    	points_Y[4] = y-i;
+		    	points_X[POINT_LEFTUP_CROSS] = x-i;
+		    	points_Y[POINT_LEFTUP_CROSS] = y-i;
 		    	break;
 			}
 		}
@@ -379,8 +380,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			    break;
 		    else if (gameboard[x-i][y+i] == turn) {
 		    	returnTurn = 1;
-		    	points_X[5] = x-i;
-		    	points_Y[5] = y+i;
+		    	points_X[POINT_LEFTDOWN_CROSS] = x-i;
+		    	points_Y[POINT_LEFTDOWN_CROSS] = y+i;
 		    	break;
 			}
 		}
@@ -397,8 +398,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			    break;
 		    else if (gameboard[x+i][y-i] == turn) {
 		    	returnTurn = 1;
-		    	points_X[6] = x+i;
-		    	points_Y[6] = y-i;
+		    	points_X[POINT_RIGHTUP_CROSS] = x+i;
+		    	points_Y[POINT_RIGHTUP_CROSS] = y-i;
 		    	break;
 			}
 		}
@@ -415,8 +416,8 @@ int checkCrossLinePiece(int x, int y, int turn)  {
 			    break;
 		    else if (gameboard[x+i][y+i] == turn) {
 		    	returnTurn = 1;
-		    	points_X[7] = x+i;
-		    	points_Y[7] = y+i;
+		    	points_X[POINT_RIGHTDOWN_CROSS] = x+i;
+		    	points_Y[POINT_RIGHTDOWN_CROSS] = y+i;
 		    	break;
 			}
 		}
